@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EntityServiceImpl implements EntityService {
+public class EntityServiceImpl <Entity> implements EntityService {
     private final EntityRepository entityRepository;
     private final EntityMapper entityMapper;
 
     @Override
     public ResponseDTO create(CreateDTO request) {
-        Entity entity = entityMapper.toEntity(request);
+        Entity entity = (Entity) entityMapper.toEntity(request);
         return entityMapper.toResponseDTO(entityRepository.save(entity));
     }
 
