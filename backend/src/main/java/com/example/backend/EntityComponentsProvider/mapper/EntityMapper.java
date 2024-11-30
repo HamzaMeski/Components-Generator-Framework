@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface EntityMapper <Entity> {
-    Entity toEntity(CreateDTO request);
+public interface EntityMapper<T, ID> {
+    T toEntity(CreateDTO<T> request);
 
-    ResponseDTO toResponseDTO(Entity entity);
+    ResponseDTO<T, ID> toResponseDTO(T entity);
 
-    void updateEntity(UpdateDTO request, @MappingTarget Entity entity);
+    void updateEntity(UpdateDTO<T> request, @MappingTarget T entity);
 }

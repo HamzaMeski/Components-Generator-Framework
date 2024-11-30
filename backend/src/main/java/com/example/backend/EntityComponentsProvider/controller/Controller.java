@@ -1,55 +1,53 @@
 package com.example.backend.EntityComponentsProvider.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.example.backend.EntityComponentsProvider.dto.request.CreateDTO;
 import com.example.backend.EntityComponentsProvider.dto.request.UpdateDTO;
 import com.example.backend.EntityComponentsProvider.dto.response.ResponseDTO;
 import com.example.backend.EntityComponentsProvider.service.EntityService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/v1/students")
 @RequiredArgsConstructor
-public class Controller {
-    private final EntityService entityService;
+public abstract class Controller<T, ID> {
+    
+    protected final EntityService<T, ID> entityService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO create(
-            @Valid @RequestBody CreateDTO request
-    ) {
-        return entityService.create(request);
+    public ResponseEntity<ResponseDTO<T, ID>> create(@Valid @RequestBody CreateDTO<T> request) {
+        return new ResponseEntity<>(entityService.create(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void update(
-            @PathVariable Long id,
-            @Valid @RequestBody UpdateDTO request
-    ) {
+    public ResponseEntity<Void> update(@PathVariable ID id, @Valid @RequestBody UpdateDTO<T> request) {
         entityService.update(id, request);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public Page<ResponseDTO> getAll(Pageable pageable) {
-        return entityService.getAll(pageable);
+    public ResponseEntity<Page<ResponseDTO<T, ID>>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(entityService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseDTO getById(
-            @PathVariable Long id
-    ) {
-        return entityService.getById(id);
+    public ResponseEntity<ResponseDTO<T, ID>> getById(@PathVariable ID id) {
+        return ResponseEntity.ok(entityService.getById(id));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<Void> delete(@PathVariable ID id) {
         entityService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

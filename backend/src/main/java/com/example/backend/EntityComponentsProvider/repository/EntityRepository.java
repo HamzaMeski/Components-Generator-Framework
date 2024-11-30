@@ -1,8 +1,8 @@
 package com.example.backend.EntityComponentsProvider.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-@Repository
-public interface EntityRepository <Entity> extends JpaRepository<Entity, Long> {
+@NoRepositoryBean
+public interface EntityRepository<T, ID> extends JpaRepository<T, ID> {
 }
