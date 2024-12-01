@@ -4,7 +4,6 @@ import com.example.backend.EntityComponentsProvider.dto.request.CreateDTO;
 import com.example.backend.entities.Trainer;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -13,8 +12,7 @@ import java.time.LocalDate;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class CreateTrainerDTO extends CreateDTO<Trainer> {
+public class CreateTrainerDTO implements CreateDTO<Trainer> {
     @NotBlank(message = "first name shouldn't be blank")
     private String firstName;
 

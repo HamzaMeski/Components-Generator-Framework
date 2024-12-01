@@ -1,8 +1,13 @@
 package com.example.backend.components.trainer.service;
 
-import com.example.backend.EntityComponentsProvider.dto.request.CreateDTO;
-import com.example.backend.EntityComponentsProvider.dto.request.UpdateDTO;
-import com.example.backend.EntityComponentsProvider.dto.response.ResponseDTO;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.backend.EntityComponentsProvider.service.EntityServiceImpl;
 import com.example.backend.components.trainer.dto.request.CreateTrainerDTO;
 import com.example.backend.components.trainer.dto.request.UpdateTrainerDTO;
@@ -12,19 +17,13 @@ import com.example.backend.components.trainer.mapper.TrainerMapper;
 import com.example.backend.components.trainer.repository.TrainerRepository;
 import com.example.backend.config.exception.DuplicateResourceException;
 import com.example.backend.entities.Trainer;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 @Transactional
-public class TrainerService extends EntityServiceImpl<Trainer, Long> {
+public class TrainerService extends EntityServiceImpl<Trainer, Long, CreateTrainerDTO, UpdateTrainerDTO, TrainerResponseDTO> {
     private final TrainerRepository trainerRepository;
     private final TrainerMapper trainerMapper;
 
@@ -35,18 +34,16 @@ public class TrainerService extends EntityServiceImpl<Trainer, Long> {
     }
 
     @Override
-    public ResponseDTO<Trainer, Long> create(CreateDTO<Trainer> request) {
-        CreateTrainerDTO createTrainerDTO = (CreateTrainerDTO) request;
-        if (trainerRepository.existsByEmail(createTrainerDTO.getEmail())) {
+    public TrainerResponseDTO create(CreateTrainerDTO request) {
+        if (trainerRepository.existsByEmail(request.getEmail())) {
             throw new DuplicateResourceException("Email already exists");
         }
         return super.create(request);
     }
 
     @Override
-    public void update(Long id, UpdateDTO<Trainer> request) {
-        UpdateTrainerDTO updateTrainerDTO = (UpdateTrainerDTO) request;
-        if (trainerRepository.existsByEmailAndIdNot(updateTrainerDTO.getEmail(), id)) {
+    public void update(Long id, UpdateTrainerDTO request) {
+        if (trainerRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
             throw new DuplicateResourceException("Email already exists");
         }
         super.update(id, request);

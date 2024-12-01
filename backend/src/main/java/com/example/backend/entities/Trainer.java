@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
+@Table(name = "trainers")
 @Data
 @SuperBuilder
 @NoArgsConstructor
