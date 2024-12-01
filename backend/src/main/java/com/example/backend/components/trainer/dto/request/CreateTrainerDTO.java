@@ -1,10 +1,10 @@
-package com.example.backend.entities;
+package com.example.backend.components.trainer.dto.request;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.backend.EntityComponentsProvider.dto.request.CreateDTO;
+import com.example.backend.entities.Trainer;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -13,11 +13,8 @@ import java.time.LocalDate;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@EqualsAndHashCode(callSuper = true)
+public class CreateTrainerDTO extends CreateDTO<Trainer> {
     @NotBlank(message = "first name shouldn't be blank")
     private String firstName;
 
@@ -28,9 +25,8 @@ public class User {
     @Email(message = "make sure the email you set is valid")
     private String email;
 
-    @NotNull
+    @NotNull(message = "birth date is required")
     private LocalDate birthDate;
 
-    @NotNull
-    private LocalDate registrationDate;
+    private LocalDate registrationDate = LocalDate.now();
 }
