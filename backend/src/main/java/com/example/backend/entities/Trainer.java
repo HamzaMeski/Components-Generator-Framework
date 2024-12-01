@@ -1,8 +1,6 @@
 package com.example.backend.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +8,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "trainers")
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class User {
+public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

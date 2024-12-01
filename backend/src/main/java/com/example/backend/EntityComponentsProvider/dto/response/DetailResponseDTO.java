@@ -11,5 +11,4 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class DetailResponseDTO<T, ID> extends ResponseDTO<T, ID> {
     // Base class for detailed response DTOs
-    // Will be extended by specific implementations to include detailed entity information
 }
