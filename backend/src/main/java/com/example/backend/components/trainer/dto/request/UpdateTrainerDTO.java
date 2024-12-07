@@ -1,14 +1,15 @@
 package com.example.backend.components.trainer.dto.request;
 
 import com.example.backend.EntityComponentsProvider.dto.request.UpdateDTO;
-import com.example.backend.entities.Trainer;
+import com.example.backend.EntityComponentsProvider.dto.request.RelationshipField;
+import com.example.backend.entities.*;
+import java.time.*;
+import java.util.*;
+import java.math.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
@@ -22,9 +23,12 @@ public class UpdateTrainerDTO extends UpdateDTO<Trainer> {
     private String lastName;
 
     @NotBlank(message = "email is required")
-    @Email(message = "make sure the email you set is valid")
     private String email;
 
-    @NotNull(message = "birth date is required")
+    @NotNull(message = "{jakarta.validation.constraints.NotNull.message}")
     private LocalDate birthDate;
+
+    @NotNull(message = "{jakarta.validation.constraints.NotNull.message}")
+    private LocalDate registrationDate;
+
 }

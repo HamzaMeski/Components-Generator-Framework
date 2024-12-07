@@ -1,18 +1,21 @@
 package com.example.backend.components.trainer.dto.request;
 
 import com.example.backend.EntityComponentsProvider.dto.request.CreateDTO;
-import com.example.backend.entities.Trainer;
+import com.example.backend.EntityComponentsProvider.dto.request.RelationshipField;
+import com.example.backend.entities.*;
+import java.time.*;
+import java.util.*;
+import java.math.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class CreateTrainerDTO implements CreateDTO<Trainer> {
+@EqualsAndHashCode(callSuper = true)
+public class CreateTrainerDTO extends CreateDTO<Trainer> {
     @NotBlank(message = "first name shouldn't be blank")
     private String firstName;
 
@@ -20,11 +23,12 @@ public class CreateTrainerDTO implements CreateDTO<Trainer> {
     private String lastName;
 
     @NotBlank(message = "email is required")
-    @Email(message = "make sure the email you set is valid")
     private String email;
 
-    @NotNull(message = "birth date is required")
+    @NotNull(message = "{jakarta.validation.constraints.NotNull.message}")
     private LocalDate birthDate;
 
-    private LocalDate registrationDate = LocalDate.now();
+    @NotNull(message = "{jakarta.validation.constraints.NotNull.message}")
+    private LocalDate registrationDate;
+
 }
