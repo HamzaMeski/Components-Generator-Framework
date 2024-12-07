@@ -24,7 +24,13 @@ git clone https://github.com/HamzaMeski/Components-Generator-Framework.git
 ```
 ## 📖 Usage
 
-1. **Define Your Entities**
+0. **If you decide to copy the generator & EntityComponentsProvider and paste them into another project**
+Make sure to update the EntityScanner BASE_PACKAGE into your path name
+```java
+private static final String BASE_PACKAGE = "com.example.backend";
+```
+
+2. **Define Your Entities**
 ```java
 @Entity
 @Data
