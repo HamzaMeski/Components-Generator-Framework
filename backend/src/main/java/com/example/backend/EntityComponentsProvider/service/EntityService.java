@@ -20,9 +20,37 @@ import jakarta.validation.Valid;
  */
 @Validated
 public interface EntityService<T, ID, C extends CreateDTO<T>, U extends UpdateDTO<T>, R extends ResponseDTO<T, ID>> {
+    /**
+     * Creates a new entity
+     * @param request The create DTO
+     * @return The created entity as response DTO
+     */
     R create(@Valid C request);
+
+    /**
+     * Updates an existing entity
+     * @param id The entity ID
+     * @param request The update DTO
+     */
     void update(ID id, @Valid U request);
-    Page<R> getAll(Pageable pageable);
+
+    /**
+     * Finds an entity by ID
+     * @param id The entity ID
+     * @return The entity as response DTO
+     */
     R getById(ID id);
+
+    /**
+     * Finds all entities with pagination
+     * @param pageable The pagination information
+     * @return A page of entities as response DTOs
+     */
+    Page<R> getAll(Pageable pageable);
+
+    /**
+     * Deletes an entity by ID
+     * @param id The entity ID
+     */
     void delete(ID id);
 }

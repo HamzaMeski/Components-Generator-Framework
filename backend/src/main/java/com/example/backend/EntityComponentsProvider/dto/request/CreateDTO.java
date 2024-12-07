@@ -1,10 +1,12 @@
 package com.example.backend.EntityComponentsProvider.dto.request;
 
-/**
- * Marker interface for create DTOs.
- * All create DTOs should implement this interface to work with the EntityComponentsProvider framework.
- * @param <T> The entity type this DTO creates
- */
-public interface CreateDTO<T> {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@SuperBuilder
+@NoArgsConstructor
+public class CreateDTO<T> {
     // Marker interface
 }
